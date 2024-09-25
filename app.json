@@ -1,23 +1,58 @@
 {
-    "name": "ALI BOT",
-    "description": " اهلا بكم جميعا !",
-    "stack": "container",
-    "repository": "https://github.com/ali9313/ali",
-    "keywords": [
-        "telegrambot"
-    ],
-    "website": "https://github.com/ali9313/ali",
-    "env": {
-        "TOKEN": {
-            "description": "توكن البوت",
-            "value": "",
-            "required": true
-        }
+  "name": "ALI BOT",
+  "description": "اهلا بكم جميعا!",
+  "stack": "container",
+  "repository": "https://github.com/ali9313/ali",
+  "keywords": [
+    "telegrambot"
+  ],
+  "website": "https://github.com/ali9313/ali",
+  "env": {
+    "TOKEN": {
+      "description": "توكن البوت",
+      "value": "",
+      "required": true
     },
-    "formation": {
-      "worker": {
-        "quantity": 1,
-        "size": "basic"
-      }
+    "SESSION": {
+      "description": "Pyrogram Session",
+      "value": "",
+      "required": true
+    },
+    "API_KEY": {
+      "description": "Bot API Key",
+      "value": "",
+      "required": true
+    },
+    "API_ID": {
+      "description": "Telegram API ID",
+      "value": "22119881",
+      "required": true
+    },
+    "API_HASH": {
+      "description": "Telegram API Hash",
+      "value": "95f5f60466a696e33a34f297c734d048",
+      "required": true
+    },
+    "FORCESUB": {
+      "description": "Public Channels for Force Subscription",
+      "value": "",
+      "required": true
+    },
+    "AUTH": {
+      "description": "Sudo user ID",
+      "value": "0000",
+      "required": true
+    },
+    "SUDO_USERS": {
+      "description": "List of admin user IDs",
+      "value": "",
+      "required": false
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "basic"
     }
   }
+}
