@@ -19,7 +19,7 @@
       "required": true
     },
     "API_KEY": {
-      "description": "ايبي البوت",
+      "description": "مفتاح كود هيروكو",
       "value": "",
       "required": true
     },
