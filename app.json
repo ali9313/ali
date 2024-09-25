@@ -14,37 +14,37 @@
       "required": true
     },
     "SESSION": {
-      "description": "Pyrogram Session",
+      "description": "جلسة بايروجرام",
       "value": "",
       "required": true
     },
     "API_KEY": {
-      "description": "Bot API Key",
+      "description": "ايبي البوت",
       "value": "",
       "required": true
     },
     "API_ID": {
-      "description": "Telegram API ID",
+      "description": "ايبي ايدي اتركه مثل ما هو",
       "value": "22119881",
       "required": true
     },
     "API_HASH": {
-      "description": "Telegram API Hash",
+      "description": "ايبي هاش اتركه مثل ما هو",
       "value": "95f5f60466a696e33a34f297c734d048",
       "required": true
     },
     "FORCESUB": {
-      "description": "Public Channels for Force Subscription",
+      "description": "القنوات العامه للاشتراك الاجباري",
       "value": "",
       "required": true
     },
     "AUTH": {
-      "description": "Sudo user ID",
+      "description": "مستخدمين السودو",
       "value": "0000",
       "required": true
     },
     "SUDO_USERS": {
-      "description": "List of admin user IDs",
+      "description": "قائمة ايدي الادمنية",
       "value": "",
       "required": false
     }
