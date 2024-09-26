@@ -2,3 +2,9 @@ build:
   docker:
     web:
       dockerfile: Dockerfile
+    worker:
+      dockerfile: Dockerfile  # إذا كان نفس Dockerfile يستخدم لكل من الـ web والـ worker
+
+run:
+  web: python main.py  # تشغيل التطبيق الخاص بالـ web
+  worker: python main.py  # تشغيل عملية الـ worker
