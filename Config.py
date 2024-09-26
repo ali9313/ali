@@ -23,8 +23,8 @@ if not os.path.exists('./.sessions'):
     os.mkdir('./.sessions')
 
 
-bot = TelegramClient('./.sessions/rad', config.API_ID, config.API_HASH).start(bot_token=config.API_KEY) 
-userbot = Client("myacc",api_id=config.API_ID,api_hash=config.API_HASH,session_string=config.SESSION)
+bot = TelegramClient('./.sessions/rad', os.environ.get("API_ID"), os.environ.get("API_HASH")).start(bot_token=os.environ.get("TOKEN")) 
+userbot = Client("myacc",api_id=os.environ.get("API_ID"),api_hash=os.environ.get("API_HASH"),session_string=os.environ.get("SESSION"))
 
 try:
     userbot.start()
@@ -34,9 +34,9 @@ except BaseException:
 
 Bot = Client(
     "./.sessions/SaveRestricted",
-    bot_token=config.API_KEY,
-    api_id=int(config.API_ID),
-    api_hash=config.API_HASH
+    bot_token=os.environ.get("TOKEN"),
+    api_id=int(os.environ.get("API_ID")),
+    api_hash=os.environ.get("API_HASH")
 )    
 
 
