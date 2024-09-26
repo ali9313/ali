@@ -1,6 +1,6 @@
 import os
 import logging
-from pyrogram import Client, idle
+from telethon import TelegramClient, events
 import sys
 
 # إعدادات تسجيل الأخطاء
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 # تكوين البوت
 class config:
-    SESSION = os.environ.get("SESSION")  # الجلسة الخاصة بحساب Pyrogram
+    SESSION = os.environ.get("SESSION")  # الجلسة الخاصة بحساب Telethon
     API_KEY = os.environ.get("TOKEN")    # توكن بوت Telegram
     API_ID = 22119881                    # API ID الخاص بحساب Telegram
     API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
@@ -20,39 +20,49 @@ class config:
 if not os.path.exists('./.sessions'):
     os.mkdir('./.sessions')
 
-# تشغيل الـ Userbot من خلال Pyrogram باستخدام جلسة صالحة
+# تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
-    userbot = Client(
+    userbot = TelegramClient(
         "my_userbot",  # اسم الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH,
-        session_string=config.SESSION
+        session=config.SESSION  # تأكد من أن الجلسة موجودة
     )
     userbot.start()
-    logger.info("Pyrogram Userbot started successfully.")
+    logger.info("Telethon Userbot started successfully.")
 except Exception as e:
-    logger.error(f"Error starting Pyrogram Userbot: {e}")
+    logger.error(f"Error starting Telethon Userbot: {e}")
     sys.exit(1)
 
-# تشغيل الـ Bot باستخدام Pyrogram
+# تشغيل الـ Bot باستخدام Telethon
 try:
-    Bot = Client(
+    bot = TelegramClient(
         "my_bot",  # اسم جلسة البوت
-        bot_token=config.API_KEY,
         api_id=config.API_ID,
         api_hash=config.API_HASH
-    )
-    Bot.start()
-    logger.info("Pyrogram Bot started successfully.")
+    ).start(bot_token=config.API_KEY)
+    
+    logger.info("Telethon Bot started successfully.")
 except Exception as e:
-    logger.error(f"Error starting Pyrogram Bot: {e}")
+    logger.error(f"Error starting Telethon Bot: {e}")
     sys.exit(1)
 
 # إبقاء البوت واليوزربوت يعملان
 try:
-    idle()  # يستخدم لإبقاء كلا من الـ Userbot والـ Bot قيد التشغيل
+    @userbot.on(events.NewMessage(pattern='/start'))
+    async def start(event):
+        await event.respond('Userbot and Bot are running!')
+
+    @bot.on(events.NewMessage(pattern='/start'))
+    async def bot_start(event):
+        await event.respond('Bot is running!')
+
+    # إبقاء كلا البوتين يعملان
+    userbot.run_until_disconnected()
+    bot.run_until_disconnected()
+
 except KeyboardInterrupt:
     logger.info("Bot stopped manually.")
 finally:
-    userbot.stop()
-    Bot.stop()
+    userbot.disconnect()
+    bot.disconnect()
