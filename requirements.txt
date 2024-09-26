@@ -5,6 +5,7 @@ cryptg
 tgcrypto
 Telethon  # أحدث إصدار من مكتبة Telethon
 psutil
+heroku3
 opencv-python-headless
 python-decouple
 requests
