@@ -1,12 +1,7 @@
 build:
   docker:
-    web: Dockerfile
+    web:
+      dockerfile: Dockerfile
 
 run:
   web: python main.py
-
-config:
-  # تثبيت المكتبات المطلوبة أولاً ثم تشغيل سكربت إنشاء قاعدة البيانات
-  script:
-    - pip install --no-cache-dir -r requirements.txt  # تثبيت المكتبات المطلوبة
-    - python setup_dt.py  # هذا هو ملف إنشاء قاعدة البيانات
