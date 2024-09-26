@@ -1,16 +1,4 @@
 build:
   docker:
     web:
-      dockerfile: Dockerfile  # تأكد من إضافة هذا السطر
-      build:
-        context: .  # مسار السياق للبناء
-
-# خطوات البناء
-run:
-  web:
-    - run:
-        name: Install Dependencies
-        command: pip install --no-cache-dir -r requirements.txt
-    - run:
-        name: Create PostgreSQL Database
-        command: python create_database.py  # استبدل بهذا اسم الملف الذي يحتوي على كود إنشاء قاعدة البيانات
+      dockerfile: Dockerfile
