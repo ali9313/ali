@@ -8,7 +8,7 @@ import logging, time, sys, os
 
 # Bot Configs 
 class config:
-    SESSION = "AgGB5kgAcmFmW_pZRaTLtQOCK_r798RWaH1aTjVGwhqtezv3pAKGS8Q3XVJT3Gw5_jrbjt1TC0QePJE0wXPm2Tlpw0MBD8OO3p680ncEepjAqIyVzOHiAepUGzCLMuO7gI3rTdqV1lWF9cJE8WaQ9qKRhL4gEkVeYDjHFlOCrxT6d1TMzb5TZuHPDwXAzDrutLkPIHP1AxlDGHEweThE3tuEwFIaU_wJpO9jupc71JWNkPTNC-QGCKMdKXTZT130htXxu-3UkEcsvYR7FA88MofwSAi7TrrdvZyxKhVneQd17FXJn_a1gVuBuSLHPq8kleDYHBvTIIB8M7GiWUv5aSfM7PQymgAAAAAN26noAA" # This Is Pyrogram Session Hers
+    SESSION = "AgGB5kgAVdRYtsP1UkUlhNimiNACXHYARn12iVDZQGikoitpWWQGCKQ9LzfDradUYqIQFVbdbv9vp2bvsHIw8q93B9bTwJs_-1lO3MZrx3tR5m30o79HoWXUQCt25wM8kr3kRBeK8LhNa6W9jaf0qkOVk1crAECQzaeIlaZkqTiuB712ErD3CDwhtQflgn70r-NlYhi64K5FqNjWJap5lvLxjRSIiTrhnrPn-3Obp_FFhXCpsluL8RxdbbOQaSYWS7LqAqvn0F17Jdxu8pTkXcx16H9s60C7HrP1C9Idl7uMc7_rAL-4Nuv6nPEFz7_DMZfkNb4N2RJhSguhfoACBTbpN2mmdAAAAAAN26noAA" # This Is Pyrogram Session Hers
     API_KEY = "7260017955:AAEDZOsfFEpqb4u5EEkU1jWkocf1-rIJ5-U" # This is Bot API Key
     AUTH = 0000 # Sudo id
     FORCESUB = 'https://t.me/u_gg_u' # Public Channls
