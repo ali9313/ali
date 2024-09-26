@@ -2,7 +2,6 @@ import os
 import logging
 from telethon import TelegramClient, events
 import sys
-import subprocess
 
 # إعدادات تسجيل الأخطاء
 logging.basicConfig(level=logging.INFO)
@@ -15,18 +14,11 @@ class config:
     API_ID = 22119881                    # API ID الخاص بحساب Telegram
     API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
 
-# التأكد من وجود مجلد الجلسات
-session_dir = os.path.abspath('./.sessions')
+# تعيين مسار ثابت لمجلد الجلسات
+session_dir = '/app/.sessions'  # أو استخدم أي مسار ثابت يناسب تطبيقك
 if not os.path.exists(session_dir):
     os.mkdir(session_dir)
     logger.info("Session directory created.")
-
-# منح الأذونات اللازمة للكتابة في المجلد
-try:
-    subprocess.run(["chmod", "755", session_dir], check=True)
-    logger.info("Write permissions granted for the session directory.")
-except Exception as e:
-    logger.error(f"Failed to set permissions: {e}")
 
 # إعداد اسم الجلسة
 session_name = config.SESSION if config.SESSION else "my_userbot"
@@ -37,7 +29,7 @@ logger.info(f"Session file path: {session_file_path}")  # التحقق من ال
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
     userbot = TelegramClient(
-        session_file_path,  # استخدام المسار
+        session_file_path,  # استخدام المسار الثابت
         api_id=config.API_ID,
         api_hash=config.API_HASH
     )
@@ -45,20 +37,20 @@ try:
     userbot.start()  # بدء الجلسة بدون إدخال رقم الهاتف
     logger.info("Telethon Userbot started successfully.")
 except Exception as e:
-    logger.error(f"Error starting Telethon Userbot: {e}")
+    logger.error(f"Error starting Telethon Userbot: {e}", exc_info=True)
     sys.exit(1)
 
 # تشغيل الـ Bot باستخدام Telethon
 try:
     bot = TelegramClient(
-        os.path.join(session_dir, "my_bot"),  # استخدام مسار الجلسة
+        os.path.join(session_dir, "my_bot"),  # استخدام مسار ثابت للجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     ).start(bot_token=config.API_KEY)
 
     logger.info("Telethon Bot started successfully.")
 except Exception as e:
-    logger.error(f"Error starting Telethon Bot: {e}")
+    logger.error(f"Error starting Telethon Bot: {e}", exc_info=True)
     sys.exit(1)
 
 # إبقاء البوت واليوزربوت يعملان
