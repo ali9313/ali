@@ -16,7 +16,7 @@ class config:
     API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
 
 # التأكد من وجود مجلد الجلسات
-session_dir = './.sessions'
+session_dir = os.path.abspath('./.sessions')
 if not os.path.exists(session_dir):
     os.mkdir(session_dir)
     logger.info("Session directory created.")
@@ -28,11 +28,19 @@ try:
 except Exception as e:
     logger.error(f"Failed to set permissions: {e}")
 
+# إعداد اسم الجلسة
+session_name = "my_userbot"  # أو config.SESSION إذا كان متاحًا
+session_file_path = os.path.join(session_dir, session_name + ".session")
+
+# حذف الملف إذا كان موجودًا
+if os.path.exists(session_file_path):
+    os.remove(session_file_path)
+    logger.info(f"Removed existing session file: {session_file_path}")
+
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
-    session_name = config.SESSION if config.SESSION else "my_userbot"
     userbot = TelegramClient(
-        os.path.join(session_dir, session_name),  # استخدام مسار الجلسة
+        session_file_path,  # استخدام المسار
         api_id=config.API_ID,
         api_hash=config.API_HASH
     )
@@ -45,7 +53,7 @@ except Exception as e:
 # تشغيل الـ Bot باستخدام Telethon
 try:
     bot = TelegramClient(
-        os.path.join(session_dir, "my_bot"),  # استخدام مسار الجلسة
+        os.path.join(session_dir, "my_bot.session"),  # استخدام مسار الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     ).start(bot_token=config.API_KEY)
