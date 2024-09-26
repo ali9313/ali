@@ -29,13 +29,8 @@ except Exception as e:
     logger.error(f"Failed to set permissions: {e}")
 
 # إعداد اسم الجلسة
-session_name = "my_userbot"  # أو config.SESSION إذا كان متاحًا
-session_file_path = os.path.join(session_dir, session_name + ".session")
-
-# حذف الملف إذا كان موجودًا
-if os.path.exists(session_file_path):
-    os.remove(session_file_path)
-    logger.info(f"Removed existing session file: {session_file_path}")
+session_name = config.SESSION if config.SESSION else "my_userbot"  # استخدام الجلسة من البيئة أو اسم افتراضي
+session_file_path = os.path.join(session_dir, session_name)
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
@@ -44,7 +39,8 @@ try:
         api_id=config.API_ID,
         api_hash=config.API_HASH
     )
-    userbot.start()
+    
+    userbot.start()  # بدء الجلسة بدون إدخال رقم الهاتف
     logger.info("Telethon Userbot started successfully.")
 except Exception as e:
     logger.error(f"Error starting Telethon Userbot: {e}")
@@ -53,7 +49,7 @@ except Exception as e:
 # تشغيل الـ Bot باستخدام Telethon
 try:
     bot = TelegramClient(
-        os.path.join(session_dir, "my_bot.session"),  # استخدام مسار الجلسة
+        os.path.join(session_dir, "my_bot"),  # استخدام مسار الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     ).start(bot_token=config.API_KEY)
