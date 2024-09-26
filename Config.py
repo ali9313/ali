@@ -8,8 +8,8 @@ import logging, time, sys, os
 
 # Bot Configs 
 class config:
-    SESSION = "AgGB5kgAVdRYtsP1UkUlhNimiNACXHYARn12iVDZQGikoitpWWQGCKQ9LzfDradUYqIQFVbdbv9vp2bvsHIw8q93B9bTwJs_-1lO3MZrx3tR5m30o79HoWXUQCt25wM8kr3kRBeK8LhNa6W9jaf0qkOVk1crAECQzaeIlaZkqTiuB712ErD3CDwhtQflgn70r-NlYhi64K5FqNjWJap5lvLxjRSIiTrhnrPn-3Obp_FFhXCpsluL8RxdbbOQaSYWS7LqAqvn0F17Jdxu8pTkXcx16H9s60C7HrP1C9Idl7uMc7_rAL-4Nuv6nPEFz7_DMZfkNb4N2RJhSguhfoACBTbpN2mmdAAAAAAN26noAA" # This Is Pyrogram Session Hers
-    API_KEY = "7260017955:AAEDZOsfFEpqb4u5EEkU1jWkocf1-rIJ5-U" # This is Bot API Key
+    SESSION = os.environ.get("SESSION") # This Is Pyrogram Session Hers
+    API_KEY = os.environ.get("TOKEN") # This is Bot API Key
     AUTH = 0000 # Sudo id
     FORCESUB = 'https://t.me/u_gg_u' # Public Channls
     
