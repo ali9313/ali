@@ -49,7 +49,7 @@ except Exception as e:
 try:
     @userbot.on(events.NewMessage(pattern='/start'))
     async def start(event):
-        await event.respond('Userbot and Bot are running!')
+        await event.respond('Userbot is running!')
 
     @bot.on(events.NewMessage(pattern='/start'))
     async def bot_start(event):
