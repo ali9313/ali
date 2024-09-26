@@ -1,67 +1,30 @@
-import os
+import logging
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+# تفعيل تسجيل الأخطاء
+logging.basicConfig(level=logging.INFO)
+
+# إدخال البيانات المطلوبة مباشرة داخل الكود
+API_ID = 1747534  # ضع API_ID هنا
+API_HASH = "5a2684512006853f2e48aca9652d83ea"  # ضع API_HASH هنا
+BOT_TOKEN = "7260017955:AAEDZOsfFEpqb4u5EEkU1jWkocf1-rIJ5-U"  # ضع توكن البوت هنا
 
 # تعريف البوت
 gagan = Client(
     "my_bot",
-    api_id=int(os.getenv("API_ID")),  # API_ID يجب أن تكون معرفه في متغيرات البيئة
-    api_hash=os.getenv("API_HASH"),   # API_HASH يجب أن تكون معرفه في متغيرات البيئة
-    bot_token=os.getenv("TOKEN")      # TOKEN يجب أن تكون معرفه في متغيرات البيئة
+    api_id=API_ID,  # استخدام API_ID مباشرة
+    api_hash=API_HASH,  # استخدام API_HASH مباشرة
+    bot_token=BOT_TOKEN  # استخدام توكن البوت مباشرة
 )
 
-S = "/start"
-TEXT = "أرسل رابط المنشور فقط من قناة أو مجموعة عامة المقيدة دون مقدمات 📇.\n\n - لشرح البوت ارسل: /help"
-
-# دالة للتأكد من الزر
-def is_set_button(data):
-    return data == "set"
-
-def is_rem_button(data):
-    return data == "rem"
-
-# التعامل مع الزر الخاص بتعيين الصورة
-@gagan.on_callback_query(filters.regex("set"))
-async def sett(client, callback_query):
-    await callback_query.message.delete()
-    # إرسال رسالة تطلب صورة
-    xx = await callback_query.message.reply_text("أرسل لي أي صورة مصغرة كـ رد على هذه الرسالة 🏞✅")
-    
-    # انتظار الرد بالصورة
-    try:
-        response = await client.listen(callback_query.message.chat.id, timeout=60)
-        if not response.photo:
-            await xx.edit_text("لم يتم العثور على أي وسائط. 💾")
-            return
-        
-        # تحميل الصورة
-        path = await response.download()
-
-        # إعادة تسمية الصورة
-        if os.path.exists(f'{callback_query.from_user.id}.jpg'):
-            os.remove(f'{callback_query.from_user.id}.jpg')
-        os.rename(path, f'./{callback_query.from_user.id}.jpg')
-
-        await xx.edit_text("تم حفظ الصورة المصغرة المؤقتة ⚡️✅")
-    except Exception as e:
-        await xx.edit_text("حدث خطأ أثناء العملية: " + str(e))
-
-# التعامل مع الزر الخاص بمسح الصورة
-@gagan.on_callback_query(filters.regex("rem"))
-async def remt(client, callback_query):
-    try:
-        os.remove(f'{callback_query.from_user.id}.jpg')
-        await callback_query.message.edit("تم مسح الصورة 🚫")
-    except FileNotFoundError:
-        await callback_query.message.edit("لم يتم حفظ الصورة المصغرة.👍🏻🚫")
+TEXT = "أرسل رابط المنشور فقط من قناة أو مجموعة عامة 📇.\n\n - لشرح البوت ارسل: /help"
 
 # التعامل مع الأمر /start
 @gagan.on_message(filters.command("start"))
 async def start_command(client, message):
-    # طباعة لاستكشاف الأخطاء والتحقق من وصول الرسالة
-    print(f"Received /start from {message.from_user.id}")
-
-    # إنشاء أزرار للاستخدام في الرد
+    print(f"Bot is working! Received /start from {message.from_user.id}")
+    
     buttons = [
         [InlineKeyboardButton("R A D", url="t.me/r_afx")]
     ]
@@ -80,17 +43,18 @@ async def help_command(client, message):
     
     help_text = """
         - خطوات استخدام البوت:
-        1- إذا كانت المجموعة أو القناة عامة ولكن مقيدة، سيتمكن البوت من جلب المنشور بكل بساطة وسهولة، فقط أرسل رابط المنشور للبوت 🔍
+        1- إذا كانت المجموعة أو القناة عامة ولكن مقيدة، سيتمكن البوت من جلب المنشور بكل بساطة وسهولة.
         
-        2- إذا كانت القناة أو المجموعة خاصة، أضف البوت يدويًا للمجموعة أو القناة ثم قم بترقيته إلى أدمن وسيتمكن البوت من جلب المنشورات بسهولة ✅
+        2- إذا كانت القناة أو المجموعة خاصة، أضف البوت يدويًا ثم قم بترقيته إلى أدمن.
         
-        🆕 » التحديث الجديد: إذا كانت القناة خاصة، أرسل للبوت رابط الدعوة/الانضمام وسيتمكن البوت من سحب المحتوى بسهولة.
+        🆕 » التحديث الجديد: إذا كانت القناة خاصة، أرسل للبوت رابط الدعوة وسيتمكن البوت من جلب المحتوى.
     """
-
+    
     await message.reply_text(
         help_text,
         reply_markup=InlineKeyboardMarkup(buttons)
     )
 
 # تشغيل البوت
+print("Bot is running...")
 gagan.run()
