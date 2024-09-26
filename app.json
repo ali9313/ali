@@ -1,10 +1,10 @@
 {
-  "name": "ALI BOT",
+  "name": "ALI USERBOT",
   "description": "اهلا بكم جميعا!",
   "stack": "container",
   "repository": "https://github.com/ali9313/ali",
   "keywords": [
-    "telegrambot"
+    "telegramuserbot"
   ],
   "website": "https://github.com/ali9313/ali",
   "env": {
@@ -14,39 +14,19 @@
       "required": true
     },
     "SESSION": {
-      "description": "جلسة بايروجرام",
-      "value": "",
-      "required": true
-    },
-    "API_KEY": {
-      "description": "مفتاح كود هيروكو",
+      "description": "جلسة تليثون (Userbot)",
       "value": "",
       "required": true
     },
     "API_ID": {
-      "description": "ايبي ايدي اتركه مثل ما هو",
+      "description": "API ID الخاص بحساب Telegram",
       "value": "22119881",
       "required": true
     },
     "API_HASH": {
-      "description": "ايبي هاش اتركه مثل ما هو",
+      "description": "API Hash الخاص بحساب Telegram",
       "value": "95f5f60466a696e33a34f297c734d048",
       "required": true
-    },
-    "FORCESUB": {
-      "description": "القنوات العامه للاشتراك الاجباري",
-      "value": "",
-      "required": true
-    },
-    "AUTH": {
-      "description": "مستخدمين السودو",
-      "value": "0000",
-      "required": true
-    },
-    "SUDO_USERS": {
-      "description": "قائمة ايدي الادمنية",
-      "value": "",
-      "required": false
     }
   },
   "formation": {
