@@ -1,6 +1,6 @@
 import os
 import logging
-from pyrogram import Client
+from pyrogram import Client, idle
 import sys
 
 # إعدادات تسجيل الأخطاء
@@ -50,8 +50,7 @@ except Exception as e:
 
 # إبقاء البوت واليوزربوت يعملان
 try:
-    userbot.idle()  # يستمر في تشغيل الـ userbot
-    Bot.idle()  # يستمر في تشغيل البوت
+    idle()  # يستخدم لإبقاء كلا من الـ Userbot والـ Bot قيد التشغيل
 except KeyboardInterrupt:
     logger.info("Bot stopped manually.")
 finally:
