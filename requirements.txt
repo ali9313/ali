@@ -1,12 +1,11 @@
-#GitHub github.com/devgaganin
-https://devgagan.in/wp-content/uploads/2023/12/gagantelethon.zip
+# مكتبات المشروع
 ethon==0.1.5
 cryptg
 tgcrypto
-Telethon  # أحدث إصدار من مكتبة Telethon
+telethon==1.24.0  # استخدام الإصدار الأخير
 psutil
 heroku3
-psycopg2
+psycopg2-binary  # استخدم psycopg2-binary بدلاً من psycopg2
 opencv-python-headless
 python-decouple
 requests
