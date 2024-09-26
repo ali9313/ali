@@ -8,10 +8,10 @@ import logging, time, sys, os
 
 # Bot Configs 
 class config:
-    SESSION = "<PYROGRAM_SESSION>" # This Is Pyrogram Session Hers
-    API_KEY = "<API_KEY>" # This is Bot API Key
+    SESSION = "AgGB5kgAcmFmW_pZRaTLtQOCK_r798RWaH1aTjVGwhqtezv3pAKGS8Q3XVJT3Gw5_jrbjt1TC0QePJE0wXPm2Tlpw0MBD8OO3p680ncEepjAqIyVzOHiAepUGzCLMuO7gI3rTdqV1lWF9cJE8WaQ9qKRhL4gEkVeYDjHFlOCrxT6d1TMzb5TZuHPDwXAzDrutLkPIHP1AxlDGHEweThE3tuEwFIaU_wJpO9jupc71JWNkPTNC-QGCKMdKXTZT130htXxu-3UkEcsvYR7FA88MofwSAi7TrrdvZyxKhVneQd17FXJn_a1gVuBuSLHPq8kleDYHBvTIIB8M7GiWUv5aSfM7PQymgAAAAAN26noAA" # This Is Pyrogram Session Hers
+    API_KEY = "7260017955:AAEDZOsfFEpqb4u5EEkU1jWkocf1-rIJ5-U" # This is Bot API Key
     AUTH = 0000 # Sudo id
-    FORCESUB = '<CHANNLS>' # Public Channls
+    FORCESUB = 'https://t.me/u_gg_u' # Public Channls
     
     API_ID = 22119881 
     API_HASH = "95f5f60466a696e33a34f297c734d048"
