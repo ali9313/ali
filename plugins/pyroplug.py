@@ -7,7 +7,7 @@ from telethon.sync import TelegramClient
 from telethon.errors import ChannelBanned, ChannelInvalid, ChannelPrivate, ChatIdInvalid, ChatInvalid
 from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument, MessageMediaVideo
 from Config import Bot, bot
-from plugins.progress import progress_for_pyrogram
+from plugins.progress import progress_for_telethon
 from plugins.helpers import screenshot, video_metadata
 
 logging.basicConfig(level=logging.debug,
