@@ -1,4 +1,4 @@
-#Join t.me/dev_gagan
+# Join t.me/dev_gagan
 
 import logging
 import time, os, asyncio
@@ -12,24 +12,15 @@ from plugins.helpers import get_link, screenshot
 
 from telethon import events, Button, errors
 from telethon.tl.types import DocumentAttributeVideo
-
-from pyrogram import Client 
-from pyrogram.errors import FloodWait
+from telethon.errors import FloodWait
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("telethon").setLevel(logging.WARNING)
-
 
 batch = []
 ids = []
-
-'''async def get_pvt_content(event, chat, id):
-    msg = await userbot.get_messages(chat, ids=id)
-    await event.client.send_message(event.chat_id, msg) 
-'''
 
 @gagan.on(events.NewMessage(incoming=True, pattern='/get'))
 async def _batch(event):
@@ -46,16 +37,14 @@ async def _batch(event):
                 except Exception:
                     await conv.send_message("لم يتم العثور على رابط المنشور أعـد ارسال رابط صالح ⚠️")
             except Exception as e:
-                #print(e)
                 logger.info(e)
-                return await conv.send_message("تـم ايقـاف عملية سحب منشورات دفعـة واحـدة بسبب تأخر الـرد اعـد ارسـال /start 🔁")
+                return await conv.send_message("تـم ايقـاف عملية سحب منشورات دفـعة واحـدة بسبب تأخر الـرد اعـد ارسـال /start 🔁")
             await conv.send_message(f"ارسل من فضلك عدد منشورات التي تريد سحبها دفعة واحدة | بـ رد علي هذا الرسالة | ✅", buttons=Button.force_reply())
             try:
                 _range = await conv.get_reply()
             except Exception as e:
                 logger.info(e)
-                #print(e)
-                return await conv.send_message("تـم ايقـاف عملية سحب منشورات دفعـة واحـدة بسبب تأخر الـرد اعـد ارسـال /start 🔁")
+                return await conv.send_message("تـم ايقـاف عملية سحب منشورات دفـعة واحـدة بسبب تأخر الـرد اعـد ارسـال /start 🔁")
             try:
                 value = int(_range.text)
                 if value > 1000000:
@@ -82,12 +71,11 @@ async def _batch(event):
             ids.clear()
             batch.clear()
 
-@gagan.on(events.callbackquery.CallbackQuery(data="cancel"))
+@gagan.on(events.CallbackQuery(data="cancel"))
 async def cancel(event):
     ids.clear()
     batch.clear()
 
-    
 async def run_batch(userbot, client, sender, countdown, link):
     for i in range(len(ids)):
         timer = 6
@@ -99,8 +87,6 @@ async def run_batch(userbot, client, sender, countdown, link):
             timer = 4
         elif i < 50000 and i > 10000:
             timer = 5
-        elif i < 100000 and i > 50000:
-            timer = 6
         elif i < 200000 and i > 100000:
             timer = 8
         elif i < 1000000: 
@@ -110,7 +96,6 @@ async def run_batch(userbot, client, sender, countdown, link):
             timer = 1 if i < 500 else 2
         try: 
             count_down = f"**بـدأ سـحـب الـمـتـعـدد انتـظــر حتـي الاكـتـمـال🚀**\n\n• عـمـلـيـات مـكـتـمـلـة ←  {i+1}"
-            #a =ids[i]
             try:
                 msg_id = int(link.split("/")[-1])
             except ValueError:
@@ -142,12 +127,10 @@ async def run_batch(userbot, client, sender, countdown, link):
                 try:
                     await get_bulk_msg(userbot, client, sender, link, integer)
                 except Exception as e:
-                    #print(e)
                     logger.info(e)
                     if countdown.text != count_down:
                         await countdown.edit(count_down, buttons=[[Button.url("فـكـرا عـن الـبوت 🧾. ", url="http://t.me/E_5_SS/4")]])
         except Exception as e:
-            #print(e)
             logger.info(e)
             await client.send_message(sender, f"An error occurred during cloning, batch will continue.\n\n**Error:** {str(e)}")
             if countdown.text != count_down:
@@ -162,21 +145,17 @@ TEXT = "أهلا من جديد في بوتك حفظ المحتوي ارسـل /s
 
 @gagan.on(events.NewMessage(pattern=f"^{C}"))
 async def start_command(event):
-    # Creating inline keyboard with buttons
     buttons = [
         [Button.inline("Cancel", data="cancel"),
          Button.inline("Cancel", data="cancel")],
         [Button.url("فـكـرا عـن الـبوت 🧾. ", url="https://telegram.dog/E_5_SS/4")]
     ]
 
-    # Sending photo with caption and buttons
     await gagan.send_file(
         event.chat_id,
         file=START_PIC,
         caption=TEXT,
         buttons=buttons
     )
-            
-TEXTING = """
 
-"""
+TEXTING = """
