@@ -1,3 +1,4 @@
+import os
 import time
 from telethon import TelegramClient
 from plugins.start import *  # استيراد جميع الوحدات الإضافية
@@ -8,9 +9,9 @@ from plugins.frontend import *
 from plugins.helpers import *
 
 # إعدادات Telethon (ضع القيم الخاصة بك هنا)
-API_ID = 123456  # ضع API_ID هنا
-API_HASH = 'your_api_hash'  # ضع API_HASH هنا
-BOT_TOKEN = 'your_bot_token'  # ضع توكن البوت هنا
+API_ID = int(os.environ.get("API_ID"))  # ضع API_ID هنا
+API_HASH = os.environ.get("API_HASH")  # ضع API_HASH هنا
+BOT_TOKEN = os.environ.get("TOKEN")  # ضع توكن البوت هنا
 
 # تعريف البوت باستخدام Telethon
 bot = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
