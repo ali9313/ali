@@ -1,8 +1,3 @@
 build:
   docker:
-    web:
-      dockerfile: Dockerfile
-
-run:
-  web: python main.py
-  worker: python worker.py  # قم بتعديل هذا ليكون اسم الملف الذي يحتوي على كود الـ worker
+    worker: Dockerfile
