@@ -13,8 +13,6 @@ class config:
     API_KEY = os.environ.get("TOKEN")    # توكن بوت Telegram
     API_ID = 22119881                    # API ID الخاص بحساب Telegram
     API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
-    AUTH = 0000  # معرف المستخدم المسؤول (sudo)
-    FORCESUB = 'https://t.me/u_gg_u'  # القناة العامة للاشتراك الإجباري
 
 # التأكد من وجود مجلد الجلسات
 if not os.path.exists('./.sessions'):
@@ -26,7 +24,7 @@ try:
         "my_userbot",  # اسم الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH,
-        session=config.SESSION  # تأكد من أن الجلسة موجودة
+        session=config.SESSION  # استخدام الجلسة هنا
     )
     userbot.start()
     logger.info("Telethon Userbot started successfully.")
