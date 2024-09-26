@@ -2,6 +2,7 @@ import os
 import logging
 from telethon import TelegramClient, events
 import sys
+import subprocess
 
 # إعدادات تسجيل الأخطاء
 logging.basicConfig(level=logging.INFO)
@@ -15,14 +16,23 @@ class config:
     API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
 
 # التأكد من وجود مجلد الجلسات
-if not os.path.exists('./.sessions'):
-    os.mkdir('./.sessions')
+session_dir = './.sessions'
+if not os.path.exists(session_dir):
+    os.mkdir(session_dir)
+    logger.info("Session directory created.")
+
+# منح الأذونات اللازمة للكتابة في المجلد
+try:
+    subprocess.run(["chmod", "755", session_dir], check=True)
+    logger.info("Write permissions granted for the session directory.")
+except Exception as e:
+    logger.error(f"Failed to set permissions: {e}")
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
     session_name = config.SESSION if config.SESSION else "my_userbot"
     userbot = TelegramClient(
-        session_name,  # اسم الجلسة
+        os.path.join(session_dir, session_name),  # استخدام مسار الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     )
@@ -35,11 +45,11 @@ except Exception as e:
 # تشغيل الـ Bot باستخدام Telethon
 try:
     bot = TelegramClient(
-        "my_bot",  # اسم جلسة البوت
+        os.path.join(session_dir, "my_bot"),  # استخدام مسار الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     ).start(bot_token=config.API_KEY)
-    
+
     logger.info("Telethon Bot started successfully.")
 except Exception as e:
     logger.error(f"Error starting Telethon Bot: {e}")
