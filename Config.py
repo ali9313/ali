@@ -29,8 +29,10 @@ except Exception as e:
     logger.error(f"Failed to set permissions: {e}")
 
 # إعداد اسم الجلسة
-session_name = config.SESSION if config.SESSION else "my_userbot"  # استخدام الجلسة من البيئة أو اسم افتراضي
+session_name = config.SESSION if config.SESSION else "my_userbot"
 session_file_path = os.path.join(session_dir, session_name)
+
+logger.info(f"Session file path: {session_file_path}")  # التحقق من المسار
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
