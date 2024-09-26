@@ -7,4 +7,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "main.py"]
+# قم بتشغيل سكربت إنشاء القاعدة قبل بدء التطبيق
+CMD ["sh", "-c", "python setup_dt.py && python main.py"]
