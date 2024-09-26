@@ -1,4 +1,4 @@
-#GitHub: devgaganin
+# GitHub: devgaganin
 
 import math
 import os
@@ -6,18 +6,19 @@ import time
 import json
 from plugins.helpers import TimeFormatter, humanbytes
 
-#------
+# ------
 FINISHED_PROGRESS_STR = "✅"
 UN_FINISHED_PROGRESS_STR = "🚀"
 DOWNLOAD_LOCATION = "/app"
 
 
-async def progress_for_pyrogram(
+async def progress_for_telethon(
     current,
     total,
-    bot,
+    client,
     ud_type,
-    message,
+    message_id,
+    chat_id,
     start
 ):
     now = time.time()
@@ -29,7 +30,8 @@ async def progress_for_pyrogram(
             with open(status, 'r+') as f:
                 statusMsg = json.load(f)
                 if not statusMsg["running"]:
-                    bot.stop_transmission()
+                    return  # or handle stopping transmission if needed
+
         speed = current / diff
         elapsed_time = round(diff) * 1
         time_to_completion = round((total - current) / speed) * 1
@@ -39,15 +41,15 @@ async def progress_for_pyrogram(
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
 
         progress = "**{0}{1}** \n".format(
-            ''.join(                
-                    FINISHED_PROGRESS_STR
-                    for _ in range(math.floor(percentage / 10))                
+            ''.join(
+                FINISHED_PROGRESS_STR
+                for _ in range(math.floor(percentage / 10))
             ),
-            ''.join(                
-                    UN_FINISHED_PROGRESS_STR
-                    for _ in range(10 - math.floor(percentage / 10))               
+            ''.join(
+                UN_FINISHED_PROGRESS_STR
+                for _ in range(10 - math.floor(percentage / 10))
             ),
-        )  
+        )
 
         tmp = progress + "**\n__Completed__:** {0} of {1}\n**__Speed__**: {2}/s\n**__Time__**: {3}\n".format(
             humanbytes(current),
@@ -55,15 +57,14 @@ async def progress_for_pyrogram(
             humanbytes(speed),
             estimated_total_time if estimated_total_time != '' else "0 s"
         )
+
         try:
+            message = await client.get_messages(chat_id, ids=message_id)
             text = f"{ud_type}\n {tmp}"
-            if message.text != text or message.caption != text:
+            if message.message != text:
                 if not message.photo:
-                    await message.edit_text(text=f"{ud_type}\n {tmp}")
-
+                    await client.edit_message(chat_id, message_id, text=f"{ud_type}\n {tmp}")
                 else:
-                    await message.edit_caption(caption=f"{ud_type}\n {tmp}")
-        except:
-            pass
-
-
+                    await client.edit_message(chat_id, message_id, caption=f"{ud_type}\n {tmp}")
+        except Exception as e:
+            print(f"Error updating message: {e}")
