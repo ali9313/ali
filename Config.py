@@ -15,16 +15,16 @@ class config:
     API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
 
 # تعيين مسار ثابت لمجلد الجلسات
-session_dir = '/app/.sessions'  # أو استخدم أي مسار ثابت يناسب تطبيقك
+session_dir = '/app/.sessions'  # مسار ثابت لمجلد الجلسات
 if not os.path.exists(session_dir):
     os.mkdir(session_dir)
     logger.info("Session directory created.")
 
 # إعداد اسم الجلسة
 session_name = config.SESSION if config.SESSION else "my_userbot"
-session_file_path = os.path.join(session_dir, session_name)
+session_file_path = os.path.join(session_dir, f"{session_name}.session")  # استخدام امتداد .session
 
-logger.info(f"Session file path: {session_file_path}")  # التحقق من المسار
+logger.info(f"Session file path: {session_file_path}")
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
@@ -43,7 +43,7 @@ except Exception as e:
 # تشغيل الـ Bot باستخدام Telethon
 try:
     bot = TelegramClient(
-        os.path.join(session_dir, "my_bot"),  # استخدام مسار ثابت للجلسة
+        os.path.join(session_dir, "my_bot.session"),  # استخدام مسار ثابت للجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     ).start(bot_token=config.API_KEY)
