@@ -27,18 +27,13 @@
       "description": "API Hash الخاص بحساب Telegram",
       "value": "95f5f60466a696e33a34f297c734d048",
       "required": true
-    },
-    "HEROKU_API_KEY": {
-      "description": "مفتاح API الخاص بحساب هيروكو",
-      "value": "",
-      "required": true
-    },
-    "HEROKU_APP_NAME": {
-      "description": "اسم تطبيق هيروكو",
-      "value": "",
-      "required": true
     }
   },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev"
+    }
+  ],
   "formation": {
     "worker": {
       "quantity": 1,
