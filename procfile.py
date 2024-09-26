@@ -1,0 +1,1 @@
+worker: python setup_db.py && python main.py
