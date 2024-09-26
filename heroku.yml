@@ -1,3 +1,15 @@
 build:
   docker:
-    worker: Dockerfile
+    web:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      # إضافة خطوة لإنشاء قاعدة البيانات
+      steps:
+        - run:
+            name: Create PostgreSQL Database
+            command: |
+              python setup_dt.py  # استبدل هذا باسم الملف الذي يحتوي على كود إنشاء قاعدة البيانات
+        - run:
+            name: Install Dependencies
+            command: pip install --no-cache-dir -r requirements.txt
