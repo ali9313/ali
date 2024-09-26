@@ -20,11 +20,11 @@ if not os.path.exists('./.sessions'):
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
+    session_name = config.SESSION if config.SESSION else "my_userbot"
     userbot = TelegramClient(
-        "my_userbot",  # اسم الجلسة
+        session_name,  # اسم الجلسة
         api_id=config.API_ID,
-        api_hash=config.API_HASH,
-        session=config.SESSION  # استخدام الجلسة هنا
+        api_hash=config.API_HASH
     )
     userbot.start()
     logger.info("Telethon Userbot started successfully.")
