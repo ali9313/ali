@@ -1,5 +1,6 @@
 import os
 import logging
+import psycopg2
 from telethon import TelegramClient, events
 import sys
 
@@ -11,31 +12,40 @@ logger = logging.getLogger(__name__)
 class config:
     SESSION = os.environ.get("SESSION")  # الجلسة الخاصة بحساب Telethon
     API_KEY = os.environ.get("TOKEN")    # توكن بوت Telegram
-    API_ID = 22119881                    # API ID الخاص بحساب Telegram
-    API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
+    API_ID = int(os.environ.get("API_ID"))  # API ID الخاص بحساب Telegram
+    API_HASH = os.environ.get("API_HASH")  # API Hash الخاص بحساب Telegram
 
-# تعيين مسار ثابت لمجلد الجلسات
-session_dir = '/app/.sessions'  # مسار ثابت لمجلد الجلسات
-if not os.path.exists(session_dir):
-    os.mkdir(session_dir)
-    logger.info("Session directory created.")
+# إعداد اتصال قاعدة البيانات
+database_url = os.environ.get("DATABASE_URL")
+try:
+    connection = psycopg2.connect(database_url)
+    logger.info("Database connection established.")
+except Exception as e:
+    logger.error(f"Unable to connect to the database: {e}")
+    sys.exit(1)
 
 # إعداد اسم الجلسة
 session_name = config.SESSION if config.SESSION else "my_userbot"
-session_file_path = os.path.join(session_dir, f"{session_name}.session")  # استخدام امتداد .session
-
-logger.info(f"Session file path: {session_file_path}")
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
     userbot = TelegramClient(
-        session_file_path,  # استخدام المسار الثابت
+        session_name,  # استخدام اسم الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     )
-    
-    userbot.start()  # بدء الجلسة بدون إدخال رقم الهاتف
-    logger.info("Telethon Userbot started successfully.")
+
+    # بدء الجلسة بدون إدخال رقم الهاتف
+    userbot.start()  
+
+    # حفظ الجلسة في قاعدة البيانات
+    session_string = userbot.session.save()  # الحصول على سلسلة الجلسة
+    with connection.cursor() as cursor:
+        cursor.execute("CREATE TABLE IF NOT EXISTS sessions (name VARCHAR PRIMARY KEY, session TEXT);")
+        cursor.execute("INSERT INTO sessions (name, session) VALUES (%s, %s) ON CONFLICT (name) DO UPDATE SET session = EXCLUDED.session;", (session_name, session_string))
+        connection.commit()
+
+    logger.info("Telethon Userbot started successfully and session saved to database.")
 except Exception as e:
     logger.error(f"Error starting Telethon Userbot: {e}", exc_info=True)
     sys.exit(1)
@@ -43,7 +53,7 @@ except Exception as e:
 # تشغيل الـ Bot باستخدام Telethon
 try:
     bot = TelegramClient(
-        os.path.join(session_dir, "my_bot.session"),  # استخدام مسار ثابت للجلسة
+        "my_bot",  # استخدام اسم جلسة البوت
         api_id=config.API_ID,
         api_hash=config.API_HASH
     ).start(bot_token=config.API_KEY)
@@ -72,3 +82,5 @@ except KeyboardInterrupt:
 finally:
     userbot.disconnect()
     bot.disconnect()
+    if connection:
+        connection.close()  # اغلاق الاتصال بقاعدة البيانات
