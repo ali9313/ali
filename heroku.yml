@@ -1,17 +1,12 @@
 build:
   docker:
-    web:
-      dockerfile: Dockerfile  # تأكد من أن لديك ملف Dockerfile صالح
+    web: Dockerfile
 
 run:
-  web: python main.py  # تشغيل التطبيق الخاص بالـ web
-  worker: python main.py  # تشغيل عملية الـ worker
+  web: python main.py
 
-setup:
-  # إعداد المتغيرات البيئية وإنشاء قاعدة البيانات
-  - run:
-      name: Create PostgreSQL Database
-      command: |
-        heroku pg:backups:capture --app $HEROKU_APP_NAME
-        heroku addons:create heroku-postgresql:hobby-dev --app $HEROKU_APP_NAME
-        heroku config:set DATABASE_URL=$(heroku config:get DATABASE_URL --app $HEROKU_APP_NAME) --app $HEROKU_APP_NAME
+config:
+  # تثبيت المكتبات المطلوبة أولاً ثم تشغيل سكربت إنشاء قاعدة البيانات
+  script:
+    - pip install --no-cache-dir -r requirements.txt  # تثبيت المكتبات المطلوبة
+    - python setup_dt.py  # هذا هو ملف إنشاء قاعدة البيانات
