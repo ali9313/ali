@@ -1,54 +1,59 @@
+import os
+import logging
 from pyrogram import Client
-from telethon.sessions import StringSession
-from telethon.sync import TelegramClient
-import logging, time, sys, os
+import sys
 
-# Logging setup
+# إعدادات تسجيل الأخطاء
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Bot Configs 
+# تكوين البوت
 class config:
-    SESSION = os.environ.get("SESSION")  # This Is Pyrogram Session Here
-    API_KEY = os.environ.get("TOKEN")  # This is Bot API Key
-    AUTH = 0000  # Sudo id
-    FORCESUB = 'https://t.me/u_gg_u'  # Public Channel
-    
-    API_ID = 22119881 
-    API_HASH = "95f5f60466a696e33a34f297c734d048"
-    SUDO_USERS = set()  # Admins List 
+    SESSION = os.environ.get("SESSION")  # الجلسة الخاصة بحساب Pyrogram
+    API_KEY = os.environ.get("TOKEN")    # توكن بوت Telegram
+    API_ID = 22119881                    # API ID الخاص بحساب Telegram
+    API_HASH = "95f5f60466a696e33a34f297c734d048"  # API Hash الخاص بحساب Telegram
+    AUTH = 0000  # معرف المستخدم المسؤول (sudo)
+    FORCESUB = 'https://t.me/u_gg_u'  # القناة العامة للاشتراك الإجباري
 
-# Check if sessions directory exists 
+# التأكد من وجود مجلد الجلسات
 if not os.path.exists('./.sessions'):
     os.mkdir('./.sessions')
 
-# Telethon Bot client
+# تشغيل الـ Userbot من خلال Pyrogram باستخدام جلسة صالحة
 try:
-    bot = TelegramClient('./.sessions/rad', config.API_ID, config.API_HASH).start(bot_token=config.API_KEY) 
-    logger.info("Telethon Bot started successfully.")
-except Exception as e:
-    logger.error(f"Error starting Telethon bot: {e}")
-    sys.exit(1)
-
-# Pyrogram Userbot client
-try:
-    userbot = Client("myacc", api_id=config.API_ID, api_hash=config.API_HASH, session_string=config.SESSION)
+    userbot = Client(
+        "my_userbot",  # اسم الجلسة
+        api_id=config.API_ID,
+        api_hash=config.API_HASH,
+        session_string=config.SESSION
+    )
     userbot.start()
     logger.info("Pyrogram Userbot started successfully.")
 except Exception as e:
     logger.error(f"Error starting Pyrogram Userbot: {e}")
     sys.exit(1)
 
-# Pyrogram Bot client
+# تشغيل الـ Bot باستخدام Pyrogram
 try:
     Bot = Client(
-        "./.sessions/SaveRestricted",
+        "my_bot",  # اسم جلسة البوت
         bot_token=config.API_KEY,
-        api_id=int(config.API_ID),
+        api_id=config.API_ID,
         api_hash=config.API_HASH
-    )    
+    )
     Bot.start()
     logger.info("Pyrogram Bot started successfully.")
 except Exception as e:
-    logger.error(f"Error starting Pyrogram bot: {e}")
+    logger.error(f"Error starting Pyrogram Bot: {e}")
     sys.exit(1)
+
+# إبقاء البوت واليوزربوت يعملان
+try:
+    userbot.idle()  # يستمر في تشغيل الـ userbot
+    Bot.idle()  # يستمر في تشغيل البوت
+except KeyboardInterrupt:
+    logger.info("Bot stopped manually.")
+finally:
+    userbot.stop()
+    Bot.stop()
