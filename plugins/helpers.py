@@ -8,7 +8,12 @@ from datetime import datetime as dt
 import math
 import cv2
 import logging
+import telethon  # استيراد المكتبة هنا
 
+# تحقق من إصدار المكتبة
+print(f"Telethon version: {telethon.__version__}")
+
+# استيراد الأخطاء
 from telethon import events, errors
 from telethon.errors import FloodWait, UserNotParticipantError, InviteHashInvalid, InviteHashExpired
 from telethon.tl.functions.channels import GetParticipantRequest
