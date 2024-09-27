@@ -4,8 +4,11 @@ import psycopg2
 from telethon import TelegramClient, events
 import sys
 
-# إعدادات تسجيل الأخطاء
-logging.basicConfig(level=logging.INFO)
+# استيراد العمليات من ملف main.py
+import main  # افترض أن main.py يحتوي على دوال تريد تشغيلها بعد الحفظ
+
+# إعدادات تسجيل الأخطاء (تسجيل الأخطاء فقط)
+logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 # تكوين البوت
@@ -19,7 +22,7 @@ class config:
 database_url = os.environ.get("DATABASE_URL")
 try:
     connection = psycopg2.connect(database_url)
-    logger.info("Database connection established.")
+    # لا تعرض رسالة عند نجاح الاتصال بقاعدة البيانات
 except Exception as e:
     logger.error(f"Unable to connect to the database: {e}")
     sys.exit(1)
@@ -44,7 +47,9 @@ try:
         cursor.execute("INSERT INTO sessions (name, session) VALUES (%s, %s) ON CONFLICT (name) DO UPDATE SET session = EXCLUDED.session;", (session_name, session_string))
         connection.commit()
 
-    logger.info("Telethon Userbot started successfully and session saved to database.")
+    # بعد نجاح حفظ الجلسة، استدعاء العمليات من ملف main.py
+    main.run_operations()  # افترض أن لديك دالة run_operations في ملف main.py
+
 except Exception as e:
     logger.error(f"Error starting Telethon Userbot: {e}", exc_info=True)
     sys.exit(1)
