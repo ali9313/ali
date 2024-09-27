@@ -2,7 +2,7 @@
 ethon==0.1.5
 cryptg
 tgcrypto
-telethon==1.24.0  # استخدام الإصدار الأخير
+telethon>=1.24.0  # استخدام الإصدار الأخير
 psutil
 heroku3
 psycopg2-binary  # استخدم psycopg2-binary بدلاً من psycopg2
