@@ -15,9 +15,8 @@ print(f"Telethon version: {telethon.__version__}")
 
 # استيراد الأخطاء
 from telethon import events, errors
-from telethon.errors import UserNotParticipantError, InviteHashInvalid, InviteHashExpired
+from telethon.errors import UserNotParticipantError  # تعديل هنا
 from telethon.errors.rpc import FloodWait  # تعديل هنا
-from telethon.tl.functions.channels import GetParticipantRequest
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -41,8 +40,6 @@ async def join(client, invite_link):
         return "𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐣𝐨𝐢𝐧𝐞𝐝 𝐭𝐡𝐞 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ✅"
     except UserAlreadyParticipant:
         return "𝐔𝐬𝐞𝐫 𝐢𝐬 𝐚𝐥𝐫𝐞𝐚𝐝𝐲 𝐚 𝐩𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐧𝐭 ✅"
-    except (InviteHashInvalid, InviteHashExpired):
-        return "𝐂𝐨𝐮𝐥𝐝 𝐧𝐨𝐭 𝐣𝐨𝐢𝐧. 𝐌𝐚𝐲𝐛𝐞 𝐲𝐨𝐮𝐫 𝐥𝐢𝐧𝐤 𝐢𝐬 𝐞𝐱𝐩𝐢𝐫𝐞𝐝 𝐨𝐫 𝐈𝐧𝐯𝐚𝐥𝐢𝐝 ⚠️"
     except FloodWait as fw:
         return f"𝐓𝐨𝐨 𝐦𝐚𝐧𝐲 𝐫𝐞𝐪𝐮𝐞𝐬𝐭𝐬, 𝐭𝐫𝐲 𝐚𝐠𝐚𝐢𝐧 𝐥𝐚𝐭𝐞𝐫 🙏 ({fw})"
     except Exception as e:
