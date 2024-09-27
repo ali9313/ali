@@ -1,7 +1,8 @@
 import os
 import time
 from telethon import TelegramClient
-from plugins.start import *  # استيراد جميع الوحدات الإضافية
+
+# استيراد جميع الوحدات الإضافية
 from plugins.progress import *
 from plugins.pyroplug import *
 from plugins.batch import *
@@ -20,7 +21,17 @@ botStartTime = time.time()
 
 print(' Edit And Fix Error By Radfx2 Telegram : @R_AFX')
 
+# تشغيل العمليات من ملف start.py الموجود في مجلد plugins
+try:
+    from plugins.start import *  # استيراد العمليات من ملف start.py
+    print("Operations from start.py loaded successfully.")
+except Exception as e:
+    print(f"Error loading operations from plugins/start.py: {e}")
+
 # تشغيل البوت
 if __name__ == "__main__":
     print("Bot is running...")
-    bot.run_until_disconnected()  # في Telethon يتم استخدام run_until_disconnected() لتشغيل البوت
+    try:
+        bot.run_until_disconnected()  # في Telethon يتم استخدام run_until_disconnected() لتشغيل البوت
+    except Exception as e:
+        print(f"Error running the bot: {e}")
