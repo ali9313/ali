@@ -15,7 +15,8 @@ print(f"Telethon version: {telethon.__version__}")
 
 # استيراد الأخطاء
 from telethon import events, errors
-from telethon.errors import FloodWait, UserNotParticipantError, InviteHashInvalid, InviteHashExpired
+from telethon.errors import UserNotParticipantError, InviteHashInvalid, InviteHashExpired
+from telethon.errors.rpc import FloodWait  # تعديل هنا
 from telethon.tl.functions.channels import GetParticipantRequest
 
 logging.basicConfig(level=logging.DEBUG,
