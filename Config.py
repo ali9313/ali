@@ -1,6 +1,5 @@
 import os
 import logging
-import psycopg2
 from telethon import TelegramClient
 import sys
 
@@ -15,34 +14,24 @@ class config:
     API_ID = int(os.environ.get("API_ID"))  # API ID الخاص بحساب Telegram
     API_HASH = os.environ.get("API_HASH")  # API Hash الخاص بحساب Telegram
 
-# إعداد اتصال قاعدة البيانات
-database_url = os.environ.get("DATABASE_URL")
-try:
-    connection = psycopg2.connect(database_url)
-    # لا تعرض رسالة عند نجاح الاتصال بقاعدة البيانات
-except Exception as e:
-    logger.error(f"Unable to connect to the database: {e}")
-    sys.exit(1)
-
 # إعداد اسم الجلسة
 session_name = config.SESSION if config.SESSION else "my_userbot"
+session_file_path = f"{session_name}.session"  # تحديد مسار ملف الجلسة
 
 # تشغيل الـ Userbot من خلال Telethon باستخدام جلسة صالحة
 try:
     userbot = TelegramClient(
-        session_name,  
+        session_file_path,  # استخدام مسار الملف بدلاً من اسم الجلسة
         api_id=config.API_ID,
         api_hash=config.API_HASH
     )
 
     userbot.start()  
 
-    # حفظ الجلسة في قاعدة البيانات
+    # حفظ الجلسة في ملف
     session_string = userbot.session.save()  
-    with connection.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS sessions (name VARCHAR PRIMARY KEY, session TEXT);")
-        cursor.execute("INSERT INTO sessions (name, session) VALUES (%s, %s) ON CONFLICT (name) DO UPDATE SET session = EXCLUDED.session;", (session_name, session_string))
-        connection.commit()
+    with open(session_file_path, 'w') as session_file:
+        session_file.write(session_string)
 
     # بعد نجاح حفظ الجلسة، استدعاء العمليات من ملف main.py
     main.run_operations()  # افترض أن لديك دالة run_operations في ملف main.py
