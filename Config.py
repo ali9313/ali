@@ -1,14 +1,11 @@
 import os
 import logging
 import psycopg2
-from telethon import TelegramClient, events
+from telethon import TelegramClient
 import sys
 
-# استيراد العمليات من ملف main.py
-import main  # افترض أن main.py يحتوي على دوال تريد تشغيلها بعد الحفظ
-
 # إعدادات تسجيل الأخطاء (تسجيل الأخطاء فقط)
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.ERROR)  # تغيير مستوى التسجيل إلى ERROR لتقليل الإشعارات
 logger = logging.getLogger(__name__)
 
 # تكوين البوت
